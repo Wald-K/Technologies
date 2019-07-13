@@ -1,0 +1,19 @@
+version: "3"
+services:
+  web:
+    # replace username/repo:tag with your name and image details
+    image: waldemarklimek/get-started:part2   # obraz na podstawie ktorego bedą tworzone kontenery
+    deploy:
+      replicas: 3  # ile uruchomic instancji konetenera
+      resources:
+        limits:
+          cpus: "0.1"  # zasoby
+          memory: 50M  # zasoby
+      restart_policy:
+        condition: on-failure  # co robić gdy
+    ports:
+      - "4000:80"  # mapowanie portow
+    networks:
+      - webnet
+networks:
+  webnet:

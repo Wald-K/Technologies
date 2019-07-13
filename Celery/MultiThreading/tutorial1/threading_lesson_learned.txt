@@ -1,0 +1,21 @@
+1. Wywołanie funkcji w wątku
+	t_1 = threading.Thread(target = sleeper, args = (10, 'Thread_1'))
+2. Start wątku
+	t_1.start()
+3. Ustawienie wątku jako demona
+	t_1.daemon = True
+	Demon zakończy się w momencie, gdy główny wątek (program) dobiegnie końca.
+4. Blokowanie wątków
+	t_1.join()
+	Dopuki wątek t_1 się nie skończy, to wątek główny nie będzie mógł dalej się wykonywać
+5. Zjawisko wyścigu (Race Conditions) - gdy 2 lub więcej wątków zmieniają stan czegokolwiek (bd, pliku, zmiennej itp.), to mogą swoje wyniki nadpisywać
+
+6. Sposoby na radzenie sobie z wiścigiem (synchronizacja):
+	6.1 Lock - w innych językach nazywane Mutex
+	Można używać z wyrażeniem with
+	main_lock = threading.Lock()
+	with lock:
+		pass
+	lub używac funkcji .acquire() i .release().
+ 
+

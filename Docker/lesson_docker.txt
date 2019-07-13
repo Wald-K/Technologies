@@ -1,0 +1,100 @@
+Docker is a platform for developers and sysadmins to develop, deploy, and run applications with containers. 
+
+A container is launched by running an image.
+An image is an executable package that includes everything needed to run an application--the code, a runtime, libraries, environment variables, and configuration files.
+
+docker info - dokładne informacje o zainstalowanym dockerze
+
+Testowanie dockera po instalacji - na obrazie hello-world: uruchom: docker run hello-world
+
+Lista obrazów: docker image ls
+
+
+Uwaga: Docker container is a Docker image brought to life
+
+
+KOMENDY: z https://towardsdatascience.com/15-docker-commands-you-should-know-970ea5203421
+------------------------------------------------------
+Containers
+Use docker container my_command
+
+create — Create a container from an image. 
+start — Start an existing container. 
+run — Create a new container and start it. 
+ls — List running containers. 
+inspect — See lots of info about a container.
+logs — Print logs. 
+stop — Gracefully stop running container. 
+kill —Stop main process in container abruptly. 
+rm— Delete a stopped container.
+
+
+------------------------------------------------------
+Images
+Use docker image my_command
+
+build — Build an image.
+push — Push an image to a remote registry.
+ls — List images. 
+history — See intermediate image info.
+inspect — See lots of info about an image, including the layers. 
+rm — Delete an image.
+
+
+------------------------------------------------------
+
+Hierarchia:
+* Stack
+* Services
+* Container
+
+CONTAINER
+
+
+1. Zdefiniuj Dockerfile defines what goes on in the environment inside your container. (Tu określamy port jako expose np. EXPOSE 80)
+
+2. Zbuduj obraz: docker build --tag=friendlyhello
+
+3. Utwórz i uruchom conetener, mapping your machine’s port 4000 to the container’s published port 80 using -p
+	docker run -p 4000:80 friendlyhello
+
+4. Sharing image:
+		- otaguj (tag) swój obraz: docker tag image username/repository:tag
+		np. docker tag friendlyhello gordon/get-started:part2
+		 (aby sprawdzić czy jest już otagowany: docker image ls)
+		- opublikuj obraz: docker push username/repository:tag
+		- jest już w repozytorium
+
+		Teraz możemy go użyć:
+		- docker run -p 4000:80 username/repository:tag - jeżeli go nie ma lokalnie, to zostanie ściągnięty z repozytorium.
+
+
+SERVICES
+In a distributed application, different pieces of the app are called “services”.
+Services are really just “containers in production.”
+
+A docker-compose.yml  is a file that defines how Docker containers should behave in production.
+
+Zainicjowanie swarma: 		docker swarm init
+
+Uruchomienie aplikacji:     docker stack deploy -c docker-compose.yml getstartedlab  , gdzie getstrtedlab - 
+																						nazwa apliakcji
+
+Sprawdzenie jakie usługi są uruchomione:    docker service ls
+
+A single container running in a service is called a task !!! 
+
+docker service ps getstartedlab_web    - pokazuje nam taski (kontenery) uruchomione w ramach usługi
+										getstartedlab_web
+
+docker ps - pokazuje wszystkie kontenery uruchomione
+docker container ls - to samo co wyżej - pokazuje wszystkie kontenery uruchomione
+ 
+
+zatrzymanie aplikacji    docker stack rm getstartedlab
+
+usunięcie swarma:    	docker swarm leave --force
+
+
+SWARMS
+

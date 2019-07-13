@@ -1,0 +1,48 @@
+TUTORIAL PART 1 - OGÓLNE
+1. RabbitMQ Server start - sudo systemctl start rabbitmq-server
+2. Domyślny port 5672
+3. Messages can only be stored inside a queue
+4. Pika - Python client
+5. recipient queue - kolejka na którą są wysyłane mesages
+6. In RabbitMQ a message can never be sent directly to the queue, it always needs to go through an exchange. !!!
+7. default exchange is identified by an empty string
+8. Lista kolejek: sudo rabbitmqctl list_queues
+9. Monitoring przez www - http://localhost:15672 - najpierw trzeba ustawić plugin sudo rabbitmq-plugins enable rabbitmq_management
+
+TUTORIAL PART 2 - JEDEN WYSYŁA A Z KOLEJKI PO KOLEI ZBIERAJĄ ODBIORCY
+
+10. Message acknowledgment - flaga auto_ack=True musi być usunięta, aby ręcznie wysyłać ack z funkcji callback
+    przez wysłanie ch.basic_ack(delivery_tag = method.delivery_tag
+    Gdy tak będziemy informować o wykonaniu zadania, to w przypadku nieobsłużenia zadania (naprzykład zwieszenie)
+    zdanie zostanie przesłane do innego workera.
+11. Message durability - spowoduje, że nawet po resecie lub zawieszeniu rabbitmq-server dane z kolejki nie zginą.
+    Aby to się stało muszą być dwa warunki:
+    - kolejka musi być zadeklarowana z parametrem durable=True
+    - wiadomość musi być zaznaczona jako persistant - delivery_mode = 2
+12. Fair dispatch - aby zadania były rozdzielane na tych workerów, którzy są mniej wolni a nie po równo
+    W workerze (odbiorcy) podajemy: channel.basic_qos(prefetch_count=1) - oznacza nie dawaj workerowi
+    więcej zadań niż jedno
+
+TUTORIAL PART 3 - JEDEN WYSYŁA A ODBIERA TĘ SAMĄ MESSAGE WIELE ODBIORCÓW - wzorzec publish/subscribe
+
+13. Teraz wprowadzimy full messaging model in Rabbit
+     the producer never sends any messages directly to a queue
+     the producer can only send messages to an exchange.
+14. Pojęcie exchange - odbiera wiadomości od producentów i wysyła na kolejki
+    Typy exchange: direct, topic, headers and fanout. W zależności od typu mogą się łączyć z jednym
+    lub wieloma kolejkami i inne cechy.
+    My zajmiemy się typem fanout
+
+15. deklaracja exchange - channel.exchange_declare(exchange='logs',exchange_type='fanout')
+
+16. Exchange typu 'fanout' - broadcasts all the messages it receives to all the queues it knows
+
+17. Binding - powiązanie exchange i queue
+
+TUTORIAL PART 4 - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF THE MESSAGE
+
+18. Dodatkowy routing_key parametr. Exchange typu fanout ignoruje ten parametr. Exchange typu direct
+    bierze go pod uwagę.
+
+
+

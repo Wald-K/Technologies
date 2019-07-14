@@ -41,8 +41,14 @@ TUTORIAL PART 3 - JEDEN WYSYŁA A ODBIERA TĘ SAMĄ MESSAGE WIELE ODBIORCÓW - w
 
 TUTORIAL PART 4 - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF THE MESSAGE
 
-18. Dodatkowy routing_key parametr. Exchange typu fanout ignoruje ten parametr. Exchange typu direct
+18. binding is a relationship between an exchange. Trzeba więc zmodyfikować binding, ale i zmienić rodzaj exchanga
+19. Dodatkowy parametr w binding - routing_key . Exchange typu 'fanout' ignoruje ten parametr.
+    Exchange typu 'direct'
     bierze go pod uwagę.
+20. Exchange typu 'direct' - a message goes to the queues whose
+                            binding key exactly matches the routing key of the message,
+                            pozostałe messages będą ignorowne.
+21.
 
 
 

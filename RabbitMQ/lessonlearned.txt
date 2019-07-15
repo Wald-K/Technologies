@@ -39,7 +39,7 @@ TUTORIAL PART 3 - JEDEN WYSYŁA A ODBIERA TĘ SAMĄ MESSAGE WIELE ODBIORCÓW - w
 
 17. Binding - powiązanie exchange i queue
 
-TUTORIAL PART 4 - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF THE MESSAGE
+TUTORIAL PART 4 - ROUTING - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF THE MESSAGE
 
 18. binding is a relationship between an exchange. Trzeba więc zmodyfikować binding, ale i zmienić rodzaj exchanga
 19. Dodatkowy parametr w binding - routing_key . Exchange typu 'fanout' ignoruje ten parametr.
@@ -48,7 +48,10 @@ TUTORIAL PART 4 - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF THE MESSAGE
 20. Exchange typu 'direct' - a message goes to the queues whose
                             binding key exactly matches the routing key of the message,
                             pozostałe messages będą ignorowne.
-21.
+
+TUTORIAL PART 5 - TOPIC - UŻYCIE PATTERNS PODCZAS BINDOWANIA EXCHANGA I KOLEJKI
+
+21. Exchange typu 'topic' umożliwia funkcjonalność bindowania z użyciem wzorca
 
 
 

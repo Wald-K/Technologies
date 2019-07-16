@@ -51,7 +51,15 @@ TUTORIAL PART 4 - ROUTING - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF TH
 
 TUTORIAL PART 5 - TOPIC - UŻYCIE PATTERNS PODCZAS BINDOWANIA EXCHANGA I KOLEJKI
 
-21. Exchange typu 'topic' umożliwia funkcjonalność bindowania z użyciem wzorca
+21. Exchange typu 'topic' umożliwia funkcjonalność bindowania z użyciem wzorca (z użyciem # i *)
+22. * - oznacza dokładnie jedno słowo
+    # - oznacza zero lub wiele słów
+23. Przykład_1: routing_key w binding = *.orange.*
+                przejdą wiadomości z routing_key= lazy.orange.elephant, quick.orange.fox
+    Przykład_2: routing_key w binding = lazy.#
+                przejdą wiadomości z routing_key = lazy.orange.elephant, lazy.brown.fox, lazy, lazy.orange.male.rabbit
+
+
 
 
 

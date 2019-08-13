@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Django and Celery</title>
+</head>
+<body>
+    <h1>Django - Celery example</h1>
+    <a href="{% url 'users_list' %}">User List</a> / <a href="{% url 'generate_users' %}">Generate Random Users</a>
+    <hr/>
+    We are generating your random users! Wait a moment and refresh this page.
+    {% for user in users %}
+    <p/>
+        {{user.username}}
+    {% endfor %}
+
+</body>
+</html>

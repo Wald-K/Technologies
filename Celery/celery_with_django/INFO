@@ -1,0 +1,11 @@
+Program prezentuje zastosowanie kolejki asynchronicznej Celery przez Django
+
+Uruchomienie:
+- w katalogu mysite uruchom workera celery poleceniem:
+  celery -A mysite worker --loglevel=info
+- w drugim oknie uruchom aplikację django
+
+
+Działanie:
+- aplikacja tworzy losowych użytkowników asynchroniczie - poprzez wysłanie taska i powrót do widoku listy użytkowników.
+Aby zobaczyć, że nowi użytkownicy zostali utworzeni trzeba odświeżyć widok.

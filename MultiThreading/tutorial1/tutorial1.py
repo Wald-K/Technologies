@@ -14,7 +14,7 @@ if __name__ == '__main__':
 	t_1.start()
 	t_2.start()
 	
-	# t_1.join()
+	t_1.join()
 	t_2.join()
 
 

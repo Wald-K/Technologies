@@ -1,6 +1,6 @@
 import threading
 
-loops_count = 100_000
+loops_count = 10_000
 total_value = 0
 
 lock = threading.Lock()
@@ -18,7 +18,7 @@ def substract_3():
     lock.acquire()
     for i in range(loops_count):
         total_value -= 3
-    # lock.release()
+    lock.release()
 
 def substract_7():
     global total_value
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     good = 0
     bad = 0
 
-    for i in range(100):
+    for i in range(1000):
 
         t_1 = threading.Thread(target = add_10)
         t_2 = threading.Thread(target = substract_3)

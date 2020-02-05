@@ -8,10 +8,10 @@ Tutorial: https://www.youtube.com/watch?v=fg-JfZBetpM&list=PLXmMXHVSvS-DvYrjHcZO
     Parametr -A oznacza nazwę aplikacji. Można podać filename.instancja_celery
 
     ps. gdy np. mamy zmienną tak jak w pliku celery_example.py, to uruchamiamy przez polecenie:
-    celery -A celery_example.celery worker --loglever=info
+    celery -A celery_example.celery worker --loglevel=info
     
 
-2. Sprawdzenie statusu rabbitmq: sudo rabbitmqctl status
+2. Sprawdzenie statusu rabbitmq:
 3. Wysłanie zadania do tasku: nazwa_tasku.delay(parametry)
 4. Gdy ustawimy backend np. na bd postgres, to możemy otrzymać wynik pracy workera.
     x = task_name.delay(parametry)

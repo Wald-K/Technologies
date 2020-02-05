@@ -13,13 +13,14 @@ TUTORIAL PART 2 - JEDEN WYSYŁA A Z KOLEJKI PO KOLEI ZBIERAJĄ ODBIORCY
 
 10. Message acknowledgment - flaga auto_ack=True musi być usunięta, aby ręcznie wysyłać ack z funkcji callback
     przez wysłanie ch.basic_ack(delivery_tag = method.delivery_tag
-    Gdy tak będziemy informować o wykonaniu zadania, to w przypadku nieobsłużenia zadania (naprzykład zwieszenie)
-    zdanie zostanie przesłane do innego workera.
-11. Message durability - spowoduje, że nawet po resecie lub zawieszeniu rabbitmq-server dane z kolejki nie zginą.
+    Gdy tak będziemy informować o wykonaniu zadania, to w przypadku nieobsłużenia zadania (naprzykład zwieszenie
+    workera) zadanie zostanie przesłane do innego workera.
+11. Message durability - spowoduje, że nawet po resecie lub zawieszeniu rabbitmq-server kolejka i dane z kolejki
+    nie zginą.
     Aby to się stało muszą być dwa warunki:
-    - kolejka musi być zadeklarowana z parametrem durable=True
-    - wiadomość musi być zaznaczona jako persistant - delivery_mode = 2
-12. Fair dispatch - aby zadania były rozdzielane na tych workerów, którzy są mniej wolni a nie po równo
+    - kolejka musi być zadeklarowana z parametrem durable=True - kolejka nie ginie
+    - wiadomość musi być zaznaczona jako persistant - delivery_mode = 2 - wiadomość nie ginie
+12. Fair dispatch - aby zadania były rozdzielane na tych workerów, którzy są  wolni a nie po równo
     W workerze (odbiorcy) podajemy: channel.basic_qos(prefetch_count=1) - oznacza nie dawaj workerowi
     więcej zadań niż jedno
 
@@ -31,13 +32,16 @@ TUTORIAL PART 3 - JEDEN WYSYŁA A ODBIERA TĘ SAMĄ MESSAGE WIELE ODBIORCÓW - w
 14. Pojęcie exchange - odbiera wiadomości od producentów i wysyła na kolejki
     Typy exchange: direct, topic, headers and fanout. W zależności od typu mogą się łączyć z jednym
     lub wieloma kolejkami i inne cechy.
-    My zajmiemy się typem fanout
+    My zajmiemy się typem fanout (wysyła do wszystkich)
 
 15. deklaracja exchange - channel.exchange_declare(exchange='logs',exchange_type='fanout')
 
 16. Exchange typu 'fanout' - broadcasts all the messages it receives to all the queues it knows
 
 17. Binding - powiązanie exchange i queue
+
+    Ogólnie tutaj po stronie nadawczej definiujemy exchange (pewnie możnaby też po stronie odbiorczej)
+    a po stronie odbiorczej tworzymy kolejkę per odbiorca o losowej nazwie, którą bindujemy z exchangem.
 
 TUTORIAL PART 4 - ROUTING - MAKE IT POSSIBLE TO SUBSCRIBE ONLY TO A SUBSET OF THE MESSAGE
 
@@ -59,7 +63,11 @@ TUTORIAL PART 5 - TOPIC - UŻYCIE PATTERNS PODCZAS BINDOWANIA EXCHANGA I KOLEJKI
     Przykład_2: routing_key w binding = lazy.#
                 przejdą wiadomości z routing_key = lazy.orange.elephant, lazy.brown.fox, lazy, lazy.orange.male.rabbit
 
-
+TUTORIAL PART 6 - RPC - remote procedure call
+24. Jest to układ w którym serwer po otrzymaniu requsta i swoich obliczeniach wysyła ich wynik spowrotem do klient:
+   - wykorzystuje drugą kolejkę, którą (callback_queue) wysłaną z zapytaniem w properties reply_to
+   - wykorzystuje properties correlation_id - unikalny identyfikator przesłany w request przez klienta
+     (klient wie, na jaki request otrzymuje odpowiedź)
 
 
 

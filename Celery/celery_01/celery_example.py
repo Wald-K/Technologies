@@ -8,8 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['CELERY_BROKER_URL']= 'amqp://localhost//'
-app.config['CELERY_RESULT_BACKEND'] = 'db+postgresql://postgres:@localhost/sandbox'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:@localhost/sandbox'
+app.config['CELERY_RESULT_BACKEND'] = 'db+postgresql://postgres:!QAZ2wsx@localhost/sandbox'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:!QAZ2wsx@localhost/sandbox'
 
 # dodane bo było ostrzeżenie
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

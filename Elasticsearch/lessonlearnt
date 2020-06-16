@@ -1,0 +1,71 @@
+1. Uruchamiamy elasticsearch jako usługę
+2. Index jest odpowiednikiem bazy danych w tradycyjnej bazie
+3. Aby otrzymać dokument z bazy potrzebujemy 3 typy informacji:
+	- Index, Datatype, Id
+4. W elasticsearch dokumenty są zapisywane, indeksowane celem wyszukiwania, sortowania i filtrowania
+5. Używa json-a jako formatu serializacji dokumentów
+6. Zapis danych w Elasticsearch nazywany jest indeksowaniem
+7. Hierarchia. Cluster has many Indices has many types has many documents
+8. Zapis wygląda następująco. Mamy dokument:
+	e1={
+	    "first_name":"nitin",
+	    "last_name":"panwar",
+	    "age": 27,
+	    "about": "Love to play cricket",
+	    "interests": ['sports','music'],
+	}
+	e3={
+    "first_name" :  "Douglas",
+    "last_name" :   "Fir",
+    "age" :         35,
+    "about":        "I like to build cabinets",
+    "interests":  [ "forestry" ]
+	}
+
+	Zapisujemy go:
+	res = es.index(index='megacorp',doc_type='employee',id=1,body=e1)
+	res = es.index(index='megacorp',doc_type='employee',id=3,body=e3)
+9. Retrieving documents - We simply execute an HTTP GET request and specify the address of the document
+	— the index, type, and ID. Using those three pieces of information, we can return the original JSON document.np. Ale chyba nie trzeba wszystkich tych danych
+	
+	res=es.get(index='megacorp',doc_type='employee',id=3)
+	ale samo print(res) nie da nam dokumentu. Musimy odczytać res['_source']
+
+10. Kasowanie dokumentu
+	res=es.delete(index='megacorp',doc_type='employee',id=3) # oczywiściew można podać sam index i id
+	print res['result']
+	daje wynik: deleted
+
+	Kasowanie dokumentów spełniających warunek
+	res = es.delete_by_query(index=index_name, body={"query": {"match_all": {}}})
+
+11. Wyszukiwanie
+	
+	## wszystkie rekordy ##
+	res= es.search(index='megacorp',body={'query':{}}) # wszystkie dokumenty w indeksie megacorp
+	Oczywiście, aby odczytać trzeba 
+	print res['hits']['hits'] i przeiterować po tym np.
+	for hit in res['hits']['hits']:
+    	print(hit['_id']) # daje id dokumentu
+    	print(hit['_source']) # daje treść dokumentu w formacie dictionary
+
+    ## match operator ## - takie które first_name = 'nitin'
+    res= es.search(index='megacorp',body={'query':{'match':{'first_name':'nitin'}}})
+
+    ## bool operator ## 
+    bool takes a dictionary containing at least one of must, should, and must_not, each of which takes a list of matches or other further search operators.
+
+    res= es.search(index='megacorp',body={
+        'query':{
+            'bool':{
+                'must':[{
+                        'match':{
+                            'first_name':'nitin'
+                        }
+                    }]
+            }
+        }
+    })
+
+12. Kasowanie całego indeksu
+res = es.indices.delete(index=index_name)

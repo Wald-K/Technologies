@@ -1,0 +1,40 @@
+import time
+from flask import Flask, request, jsonify
+import json
+
+app = Flask(__name__)
+
+user_seen = {}
+
+
+@app.route('/')
+def hello():
+    user_agent = request.headers.get('User-Agent')
+    return 'Hello! I see you are using %s' % user_agent
+
+
+@app.route('/checkin', methods=['POST'])
+def check_in():
+    data = request.get_json()
+    user = data['user']
+
+
+    user_seen[user] = time.strftime("%H:%M:%S")
+    return jsonify(success=True, user=user)
+
+
+@app.route('/last_seen/<user>')
+def last_seen(user):
+    if user in user_seen:
+        return jsonify(user=user, date=user_seen[user])
+    else:
+        return jsonify(error='Who dis?', user=user), 404
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

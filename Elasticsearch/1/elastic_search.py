@@ -6,8 +6,8 @@ es = Elasticsearch(hosts)
 
 index_name = 'experimental'
 
-res = es.search(index=index_name, body={"query": {"match_all": {}}}, size=100)             # fetch all the records
-# res = es.search(index = index_name , body={"query": {"term": {"name": "Jupiter"} }})   # select by equality
+# res = es.search(index=index_name, body={"query": {"match_all": {}}}, size=100)             # fetch all the records
+res = es.search(index=index_name, body={"query": {"term": {"name": 'Jupiter'}}}, size=10)   # select by equality
 # res = es.search(index=index_name, body={"query": {"match": {"name": 'Jupiter'}}}, size=3)  # limit the number of results
 # res = es.search(index = index_name , body={"query": {"range": {"rnd": {'gte': 20} }}})
 # res = es.search(index = index_name , body={"query": {"range": {"timestamp": {'gte': datetime.now()} }}})  # some way to pass a datetime object

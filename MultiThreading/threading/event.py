@@ -13,9 +13,6 @@ def increase_by_one(array):
     for i in range(len(array)):
         array[i] += 1
 
-
-
-
 if __name__ == "__main__":
     data = np.zeros((100000, 1))
     t = Thread(target=increase_by_one, args=(data,))
@@ -37,10 +34,7 @@ if __name__ == "__main__":
     print(np.mean(data))
 
 '''
-
-
-   
-    
+'''
 evnt = Event()
 
 def increase_by_one(array):
@@ -67,4 +61,32 @@ if __name__ == "__main__":
     t.join()
 
     print(data[0])
-    print(np.mean(data))
+    print(np.mean(data)) '''
+
+evnt = Event()
+
+
+def increase_by_one(array):
+    while True:
+        if evnt.is_set():
+            for i in range(len(array)):
+                array[i] += 1
+            print('Incremendation done')
+            break
+        sleep(1)
+        print('Thread wait for event')
+
+
+if __name__ == "__main__":
+    data = np.ones((10000, 1))
+    t = Thread(target=increase_by_one, args=(data,))
+    t.start()
+
+    print('Main wait')
+    sleep(10)
+    print('Event is set')
+    evnt.set()
+
+    t.join()
+
+    print(data[0])

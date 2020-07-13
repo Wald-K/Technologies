@@ -7,7 +7,7 @@
 	Demon zakończy się w momencie, gdy główny wątek (program) dobiegnie końca.
 4. Blokowanie wątków
 	t_1.join()
-	Dopuki wątek t_1 się nie skończy, to wątek główny nie będzie mógł dalej się wykonywać
+	Dopóki wątek t_1 się nie skończy, to wątek główny nie będzie mógł dalej się wykonywać
 5. Zjawisko wyścigu (Race Conditions) - gdy 2 lub więcej wątków zmieniają stan czegokolwiek (bd, pliku, zmiennej itp.), to mogą swoje wyniki nadpisywać
 
 6. Sposoby na radzenie sobie z wiścigiem (synchronizacja):

@@ -53,9 +53,9 @@ CONTAINER
 
 1. Zdefiniuj Dockerfile defines what goes on in the environment inside your container. (Tu określamy port jako expose np. EXPOSE 80)
 
-2. Zbuduj obraz: docker build --tag=friendlyhello
+2. Zbuduj obraz: docker build --tag=friendlyhello .
 
-3. Utwórz i uruchom conetener, mapping your machine’s port 4000 to the container’s published port 80 using -p
+3. Utwórz i uruchom contener, mapping your machine’s port 4000 to the container’s published port 80 using -p
 	docker run -p 4000:80 friendlyhello
 
 4. Sharing image:
@@ -77,8 +77,7 @@ A docker-compose.yml  is a file that defines how Docker containers should behave
 
 Zainicjowanie swarma: 		docker swarm init
 
-Uruchomienie aplikacji:     docker stack deploy -c docker-compose.yml getstartedlab  , gdzie getstrtedlab - 
-																						nazwa apliakcji
+Uruchomienie aplikacji:     docker stack deploy -c docker-compose.yml getstartedlab  , gdzie getstrtedlab - nazwa apliakcji
 
 Sprawdzenie jakie usługi są uruchomione:    docker service ls
 

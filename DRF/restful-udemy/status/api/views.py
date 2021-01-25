@@ -7,6 +7,8 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 
+
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from status.models import Status
 from .serializers import StatusSerializer
 
@@ -221,7 +223,7 @@ class StatusAPIView(
     generics.ListAPIView):
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
     serializer_class = StatusSerializer
     # queryset = Status.objects.all()
     
@@ -238,5 +240,3 @@ class StatusAPIView(
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    

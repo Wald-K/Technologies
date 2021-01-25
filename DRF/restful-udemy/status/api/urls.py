@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+
 from .views import (
     # StatusListSearchAPIView,
     StatusAPIView,
@@ -40,6 +41,7 @@ urlpatterns = [
     # two endpoints - generic views and mixins
     path('', StatusAPIView.as_view()),
     path('<int:pk>/', StatusAPIDetailView.as_view()),
+
 
 
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'status',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -130,4 +131,5 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=5),
     'JWT_ALLOW_REFRESH': True,
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'accounts.api.utils.jwt_response_payload_handler',
 }
